@@ -1,0 +1,8 @@
+Kp: 1.0
+Ki: 4.5
+Kd: 0.0015
+out_min: -1
+out_max: 1
+rate: 15
+timeout_ticks: 10
+rolling_pts: 1

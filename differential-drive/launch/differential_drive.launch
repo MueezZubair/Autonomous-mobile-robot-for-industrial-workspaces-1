@@ -1,0 +1,30 @@
+<launch>
+
+  <rosparam command="load"
+
+  file="$(find differential_drive)/cfg/global.yaml">
+  </rosparam>
+
+  <node pkg="differential_drive" type="diff_tf.py" name="diff_tf" respawn="true" />
+ 
+  <node pkg="differential_drive" type="pid_velocity" name="flpid_velocity">
+    <remap from="wheel" to="/front_left/encoder"/>
+    <remap from="motor_cmd" to="/front_left/motor_cmd"/>
+    <remap from="wheel_vtarget" to="lwheel_vtarget"/>
+    <remap from="wheel_vel" to="/front_left/velocity"/>
+    <rosparam command="load" file="$(find differential_drive)/cfg/pid.yaml"/>
+  </node>
+ 
+    <node pkg="differential_drive" type="pid_velocity" name="frpid_velocity">
+    <remap from="wheel" to="/front_right/encoder"/>
+    <remap from="motor_cmd" to="/front_right/motor_cmd"/>
+    <remap from="wheel_vtarget" to="rwheel_vtarget"/>
+    <remap from="wheel_vel" to="/front_right/velocity"/>
+    <rosparam command="load" file="$(find differential_drive)/cfg/pid.yaml"/>
+  </node>
+ 
+  <node pkg="differential_drive" type="twist_to_motors.py"
+      name="twist_to_motors" output="screen">
+    <remap from="twist" to="cmd_vel"/>
+  </node>
+</launch> 
