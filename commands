@@ -1,0 +1,9 @@
+roslaunch localization_data_pub robot_ekf_pose.launch
+roslaunch ydlidar lidar.launch
+	rosrun gmapping slam_gmapping scan:=scan odom_frame:=odom_data_quat
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+rosrun rosserial_python serial_node.py _port:=/dev/ttyACM0 _baud:=115200
+roslaunch rtabmap_ros rtabmap.launch rtabmap_args:="--delete_db_on_start"
+roslaunch freenect_launch freenect.launch depth_registration:=true
+roslaunch openni_launch openni.launch depth_registration:=true
+roslaunch rtabmap_ros planner.launch
